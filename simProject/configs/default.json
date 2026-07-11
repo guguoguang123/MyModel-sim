@@ -1,0 +1,10 @@
+{
+  "graphs_path": "RelatedData/graphs.npz",
+  "output_path": "simProject/outputs/behavior_labels.npz",
+  "meta_output_path": "simProject/outputs/label_meta.json",
+  "num_vectors": 4096,
+  "limit": null,
+  "seed": 20260710,
+  "workload_mode": "default"
+}
+
