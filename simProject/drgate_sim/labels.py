@@ -8,13 +8,17 @@ def build_response_labels(B: np.ndarray) -> dict:
     R = (B - mu[None, :, :]).astype(np.float32)
     num_workloads, num_nodes, behavior_dim = R.shape
     S = np.transpose(R, (1, 0, 2)).reshape(num_nodes, num_workloads * behavior_dim)
-    sensitivity = np.sum(np.square(R, dtype=np.float32), axis=(0, 2)).astype(np.float32)
+    squared_response = np.square(R, dtype=np.float32)
+    sensitivity_sum = np.sum(squared_response, axis=(0, 2)).astype(np.float32)
+    sensitivity_var = np.mean(squared_response, axis=0).sum(axis=1).astype(np.float32)
     return {
         "B": B.astype(np.float32),
         "R": R,
         "S": S.astype(np.float32),
         "mu": mu,
-        "sensitivity": sensitivity,
+        "sensitivity": sensitivity_var,
+        "sensitivity_var": sensitivity_var,
+        "sensitivity_sum": sensitivity_sum,
     }
 
 
@@ -22,4 +26,3 @@ def cosine_similarity_matrix(S: np.ndarray, eps: float = 1e-8) -> np.ndarray:
     norm = np.linalg.norm(S, axis=1, keepdims=True)
     normalized = S / np.maximum(norm, eps)
     return normalized @ normalized.T
-

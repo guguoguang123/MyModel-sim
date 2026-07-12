@@ -5,6 +5,6 @@
   "num_vectors": 128,
   "limit": 5,
   "seed": 20260710,
-  "workload_mode": "debug"
+  "workload_mode": "debug",
+  "num_realizations": 2
 }
-
